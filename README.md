@@ -19,7 +19,7 @@ Watch this video:
 6. (ONLY FOR WINDOWS USERS) Change first line in `./hooks/commit-msg`, `./hooks/pre-commit` and `./hooks/setup/hooks` from `#!/bin/sh` to `#!/bin/bash`;
 7. Run `cat ./hooks/pre-commit` and change `USER_NAME="user_name"` on third string to `USER_NAME="<YOUR-NAME_LAST_NAME>"` Example: `USER_NAME="my_name"` and save the file.
 8. Run command `yarn configure:hooks` (FOR WINDOWS USERS `yarn configure:hooks:windows`);
-9. Run command `cd ./server && yarn && cd ../mobile && yarn`
+9. Run command `yarn start`
 
 Now you can run project by calling backend `cd ./server && yarn server` and mobile `cd ./mobile && yarn start`
 
