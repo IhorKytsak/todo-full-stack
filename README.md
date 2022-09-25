@@ -9,7 +9,7 @@
 ## Pre requirements
 
 Watch this video:
-[Hook Setup](https://www.youtube.com/watch?v=jM0Jqfmr9sc&ab_channel=CodeGenerationSoftware)
+[Hook Setup](https://drive.google.com/file/d/1kZGYqx_9Pu29PcdBv6TNOCKOeZa0yh52/view?usp=sharing)
 
 1. Pull repo.
 2. `git checkout -b <name that you have set in pre-requirements>/main`
