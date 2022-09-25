@@ -17,11 +17,11 @@ Watch this video:
 4. If you are windows user, make sure that `bash` have been installed if not check [Installation link](https://hackernoon.com/how-to-install-bash-on-windows-10-lqb73yj3);
 5. Open Terminal in your project (make sure that you are in main directory with `hooks` folder)
 6. (ONLY FOR WINDOWS USERS) Change first line in `./hooks/commit-msg`, `./hooks/pre-commit` and `./hooks/setup/hooks` from `#!/bin/sh` to `#!/bin/bash`;
-7. Run `cat ./hooks/pre-commit` and change `USER_NAME="user_name"` on third string to `USER_NAME="<YOUR-NAME_LAST_NAME>"` Example: `USER_NAME="my_name"` and save the file.
+7. Run `nano ./hooks/pre-commit` and change `USER_NAME="user_name"` on third string to `USER_NAME="<YOUR-NAME_LAST_NAME>"` Example: `USER_NAME="my_name"` and save the file.
 8. Run command `yarn configure:hooks` (FOR WINDOWS USERS `yarn configure:hooks:windows`);
 9. Run command `yarn start`
 
-Now you can run project by calling backend `cd ./server && yarn server` and mobile `cd ./mobile && yarn start`
+Now you can run project by calling `yarn start`
 
 Avoid Upper case! Do not use `N_Surname` syntax or `Implement-Crud-Todo` syntax
 
@@ -82,11 +82,11 @@ Time-frames of the test task is highly important! You have only 2 weeks for the 
 
 - _All pagination should be handled by backend_
 - _Change frontend request with pagination params_
-- _Pagination should be done differently on different devices. Desktop - button pagination, Laptop - horizontal scroll pagination, Mobile - vertical scroll pagination_
+- _Pagination should be done differently on different devices. Desktop - button pagination, Tablet - horizontal scroll pagination, Mobile - vertical scroll pagination_
 
 ### NOTES
 
-> Backend should have stored in `server` dir, mobile should be stored in `mobile` dir.
+> Backend should have stored in `backend` dir, mobile should be stored in `fronted` dir.
 > Use technologies from `Useful links and technologies`. You should create separate pr for each task.
 
 Design: [drive.google](https://drive.google.com/file/d/1Xw1OUerR9ndQ1Ay8hp1nhqvtXcdJkGbQ/view?usp=sharing)
