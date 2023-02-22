@@ -9,7 +9,7 @@
 ## Pre requirements
 
 Watch this video:
-[Hook Setup](https://drive.google.com/file/d/1kZGYqx_9Pu29PcdBv6TNOCKOeZa0yh52/view?usp=sharing)
+[Hook Setup](https://drive.google.com/file/d/1Ze02SQASwp8KIm39lvL7Gavzq7yZ5HFq/view?usp=sharing)
 
 1. Pull repo.
 2. `git checkout -b <name that you have set in pre-requirements>/main`
@@ -89,7 +89,7 @@ Time-frames of the test task is highly important! You have only 2 weeks for the 
 > Backend should have stored in `backend` dir, mobile should be stored in `fronted` dir.
 > Use technologies from `Useful links and technologies`. You should create separate pr for each task.
 
-Design: [drive.google](https://drive.google.com/file/d/1Xw1OUerR9ndQ1Ay8hp1nhqvtXcdJkGbQ/view?usp=sharing)
+Design: [drive.google](https://drive.google.com/file/d/1PcusGdHTmD4qzhKRJnd9pk2jLAUyLIiX/view?usp=sharing)
 
 ## PR convention
 
