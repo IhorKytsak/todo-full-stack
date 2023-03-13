@@ -1,20 +1,24 @@
 {
+  "typeRoots": ["@types/node", "./src/types"],
   "compilerOptions": {
     "strict": true,
-    "typeRoots": [
-      "@types/node",
-      "./src/types"
-    ],
     "module": "commonjs",
-    "esModuleInterop": true,
-    "target": "es5",
-    "moduleResolution": "node",
+    "declaration": true,
+    "removeComments": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "target": "es2017",
     "sourceMap": true,
+    "esModuleInterop": true,
+    "strictPropertyInitialization": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
       "*": ["node_modules/*"]
     }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*"]
 }
