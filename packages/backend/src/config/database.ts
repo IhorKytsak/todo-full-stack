@@ -1,6 +1,8 @@
 /* eslint-disable no-console */
 
 import { DataSource, DataSourceOptions } from 'typeorm';
+import { UserEntity } from '../entities/User.entity';
+import { TodoEntity } from '../entities/Todo.entity';
 
 const connectDB = async () => {
   try {
@@ -9,7 +11,7 @@ const connectDB = async () => {
       port: Number(process.env.POSTGRES_PORT),
       logging: ['query', 'error'],
       type: 'postgres',
-      entities: ['dist/**/*.entity.{ts,js}'],
+      entities: [UserEntity, TodoEntity],
       migrations: ['dist/migrations/**/*.{ts,js}'],
       subscribers: ['src/subscriber/**/*.ts'],
       database: process.env.POSTGRES_DB,
