@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-import { createConnection, DataSourceOptions } from 'typeorm';
+import { DataSource, DataSourceOptions } from 'typeorm';
 
 const connectDB = async () => {
   try {
@@ -17,8 +17,10 @@ const connectDB = async () => {
       password: process.env.POSTGRES_PASSWORD,
       synchronize: true
     };
-    await createConnection(options);
-    console.log('MongoDB Connected...');
+
+    const dataSource = new DataSource(options);
+    await dataSource.initialize();
+    console.log('PostgreSQL Connected...');
   } catch (err: unknown) {
     if (err instanceof Error) {
       console.error(err.message);
