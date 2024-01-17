@@ -87,7 +87,7 @@ rules:
   # We use for..in
   no-restricted-syntax: 'off'
   # We like arrow parenthesis
-  prettier/prettier: [error, { arrowParens: always }]
+  prettier/prettier: [error, { arrowParens: always, 'endOfLine': 'auto' }]
   # We like nested ternaries
   no-nested-ternary: 'off'
   # Conflicting with prettier
@@ -102,6 +102,7 @@ rules:
   function-paren-newline: 'off'
   # We don't need consistent returns
   consistent-return: 'off'
+  linebreak-style: ['error', 'windows']
 
   # ⭐ JSX-A11Y rules
   jsx-a11y/no-noninteractive-element-interactions: 'off'
