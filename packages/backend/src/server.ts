@@ -4,16 +4,18 @@ import 'dotenv/config';
 
 import AppRouter from './routes';
 import connectDB from './config/database';
+import { errorHandler } from './utils/error-handler.util';
 
 const app = express();
 const router = new AppRouter(app);
-// Connect to MongoDB
+
 connectDB();
 
 // Express configuration
 app.set('port', process.env.PORT || 4200);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(errorHandler);
 
 router.init();
 

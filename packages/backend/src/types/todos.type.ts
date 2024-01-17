@@ -1,5 +1,6 @@
-// TODO: Put a real interfaces here
-
 export interface ITodo {
-  data: string;
+  title: string;
+  description: string;
+  isCompleted: boolean;
+  isPrivate: boolean;
 }

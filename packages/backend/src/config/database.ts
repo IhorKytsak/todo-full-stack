@@ -1,18 +1,8 @@
 /* eslint-disable no-console */
 
-import { createConnection, DataSourceOptions } from 'typeorm';
-
-function getSSLConfig(env: string) {
-  const configs: { [key: string]: boolean | { [key: string]: boolean } } = {
-    production: { rejectUnauthorized: true },
-    local: false,
-    deploy: { rejectUnauthorized: false }
-  };
-  if (!configs[env] === undefined) {
-    throw new Error('Set network in your .env file');
-  }
-  return configs[env];
-}
+import { DataSource, DataSourceOptions } from 'typeorm';
+import { UserEntity } from '../entities/User.entity';
+import { TodoEntity } from '../entities/Todo.entity';
 
 const connectDB = async () => {
   try {
@@ -21,21 +11,24 @@ const connectDB = async () => {
       port: Number(process.env.POSTGRES_PORT),
       logging: ['query', 'error'],
       type: 'postgres',
-      entities: ['dist/**/*.entity.{ts,js}'],
+      entities: [UserEntity, TodoEntity],
       migrations: ['dist/migrations/**/*.{ts,js}'],
       subscribers: ['src/subscriber/**/*.ts'],
       database: process.env.POSTGRES_DB,
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
-      ssl: getSSLConfig(process.env.SERVER_MODE),
       synchronize: true
     };
-    await createConnection(options);
-    console.log('MongoDB Connected...');
-  } catch (err) {
-    console.error(err.message);
-    // Exit process with failure
-    process.exit(1);
+
+    const dataSource = new DataSource(options);
+    await dataSource.initialize();
+    console.log('PostgreSQL Connected...');
+  } catch (err: unknown) {
+    if (err instanceof Error) {
+      console.error(err.message);
+
+      process.exit(1);
+    }
   }
 };
 
