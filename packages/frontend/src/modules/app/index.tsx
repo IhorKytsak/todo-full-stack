@@ -1,10 +1,12 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { ThemeProvider } from 'styled-components';
-import { MainRouter } from '../navigation';
 
+import { MainRouter } from '../navigation';
+import Header from '../common/components/header';
+import Footer from '../common/components/footer';
 import * as theme from '../theme';
-import * as Styled from './app.styled';
+import { GlobalStyles, MainWrapper } from './app.styled';
 import '../../style.css';
 
 const queryClient = new QueryClient({
@@ -21,9 +23,13 @@ const queryClient = new QueryClient({
 
 const AppContainer = () => (
   <ThemeProvider theme={theme}>
-    <Styled.GlobalStyles />
+    <GlobalStyles />
     <QueryClientProvider client={queryClient}>
-      <MainRouter />
+      <MainWrapper>
+        <Header />
+        <MainRouter />
+        <Footer />
+      </MainWrapper>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </ThemeProvider>
