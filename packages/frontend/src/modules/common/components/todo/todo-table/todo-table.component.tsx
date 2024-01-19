@@ -5,27 +5,28 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
+import { useQuery } from '@tanstack/react-query';
+
 import { COLORS } from '../../../../theme/colors.const';
 import { TodoActions } from '../todo-actions';
+import { QUERY_KEYS } from '../../../consts/app-keys.const';
+import todoService from '../../../../service/todo.service';
+import { ITodo } from '../../../types/todo.types';
 
-const rows = [
-  {
-    id: 1,
-    title: 'Snow',
-    description: 'lodem100wdasdasd',
-    isCompleted: true
-  },
-  { id: 2, title: 'Lannister', description: 'Cersei', isCompleted: true },
-  { id: 3, title: 'Lannister', description: 'Jaime', isCompleted: false },
-  { id: 4, title: 'Stark', description: 'Arya', isCompleted: true },
-  { id: 5, title: 'Targaryen', description: 'Daenerys', isCompleted: true },
-  { id: 6, title: 'Melisandre', description: 'sadsadasd', isCompleted: true },
-  { id: 7, title: 'Clifford', description: 'Ferrara', isCompleted: false },
-  { id: 8, title: 'Frances', description: 'Rossini', isCompleted: true },
-  { id: 9, title: 'Roxie', description: 'Harvey', isCompleted: true }
-];
+const TodoTable = () => {
+  const { isPending, error, data } = useQuery({
+    queryKey: [QUERY_KEYS.TODOS],
+    queryFn: () => todoService.getTodos()
+  });
 
-export default function BasicTable() {
+  if (error) {
+    return <div>Error</div>;
+  }
+
+  if (isPending) {
+    return <div>Loading</div>;
+  }
+
   return (
     <TableContainer component={Paper}>
       <Table aria-label="simple table">
@@ -41,7 +42,7 @@ export default function BasicTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (
+          {data.map((row: ITodo) => (
             <TableRow
               key={row.id}
               sx={{
@@ -77,4 +78,6 @@ export default function BasicTable() {
       </Table>
     </TableContainer>
   );
-}
+};
+
+export default TodoTable;
