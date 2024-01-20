@@ -1,42 +1,40 @@
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import Tooltip from '@mui/material/Tooltip';
-import { ActionWrapper } from './todo-actions.styled';
-import { actionNames } from '../../../consts/app.consts';
-import { COLORS } from '../../../../theme/colors.const';
+import { Button, Checkbox, Tooltip } from '@mui/material';
+import { Link } from 'react-router-dom';
 
-interface TodoActionsInterface {
+import { ActionWrapper } from './todo-actions.styled';
+import { actionButtonNames, APP_KEYS } from '../../../consts';
+
+interface TodoActionsProps {
+  todoId: number;
   isCompleted: boolean;
   deleteHandler: () => void;
-  todoDetailsHandler: () => void;
+  checkboxHandler: () => void;
 }
 
 export const TodoActions = ({
   isCompleted,
   deleteHandler,
-  todoDetailsHandler
-}: TodoActionsInterface) => {
-  const label = { inputProps: { 'aria-label': 'Todo Checkbox' } };
-
-  return (
-    <ActionWrapper>
-      <Button onClick={todoDetailsHandler} variant="outlined" size="small">
-        {actionNames.view}
+  checkboxHandler,
+  todoId
+}: TodoActionsProps) => (
+  <ActionWrapper>
+    <Link to={APP_KEYS.BACKEND_KEYS.GETTODO(todoId)}>
+      <Button variant="outlined" size="small">
+        {actionButtonNames.view}
       </Button>
-      <Button onClick={deleteHandler} variant="outlined" size="small">
-        {actionNames.delete}
-      </Button>
-      <Tooltip title="Indicates whether this task is complete">
-        <span>
-          <Checkbox
-            {...label}
-            size="small"
-            disabled
-            checked={isCompleted}
-            sx={{ '&.Mui-disabled': { color: COLORS.primary } }}
-          />
-        </span>
-      </Tooltip>
-    </ActionWrapper>
-  );
-};
+    </Link>
+    <Button onClick={deleteHandler} variant="outlined" size="small">
+      {actionButtonNames.delete}
+    </Button>
+    <Tooltip title="Indicates whether this task is complete">
+      <span>
+        <Checkbox
+          size="small"
+          inputProps={{ 'aria-label': 'Controlled Todo Checkbox' }}
+          checked={isCompleted}
+          onChange={checkboxHandler}
+        />
+      </span>
+    </Tooltip>
+  </ActionWrapper>
+);

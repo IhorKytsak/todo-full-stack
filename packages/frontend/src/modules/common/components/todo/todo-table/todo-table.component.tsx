@@ -1,23 +1,67 @@
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { useQuery } from '@tanstack/react-query';
+import {
+  Paper,
+  TableRow,
+  TableHead,
+  TableContainer,
+  TableCell,
+  TableBody,
+  Table
+} from '@mui/material';
+import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
+import { toast } from 'react-toastify';
 
-import { COLORS } from '../../../../theme/colors.const';
+import { COLORS } from '../../../../theme';
 import { TodoActions } from '../todo-actions';
-import { QUERY_KEYS } from '../../../consts/app-keys.const';
+import { APP_KEYS, toastMassages } from '../../../consts';
 import todoService from '../../../../service/todo.service';
-import { ITodo } from '../../../types/todo.types';
+import { ITodo, ITodoUpdate } from '../../../types/todo.types';
 
 const TodoTable = () => {
+  const queryClient = useQueryClient();
+
   const { isPending, error, data } = useQuery({
-    queryKey: [QUERY_KEYS.TODOS],
+    queryKey: [APP_KEYS.QUERY_KEYS.TODOS],
     queryFn: () => todoService.getTodos()
   });
+
+  const { mutate: deleteTodoMutation } = useMutation({
+    mutationFn: (id: number) => todoService.deleteTodo(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [APP_KEYS.QUERY_KEYS.TODOS] });
+    }
+  });
+
+  const { mutate: updateTodoMutation } = useMutation({
+    mutationFn: (body: ITodoUpdate) => todoService.updateTodo(body),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [APP_KEYS.QUERY_KEYS.TODOS] });
+    }
+  });
+
+  const deleteTodoHandler = (id: number) => {
+    deleteTodoMutation(id, {
+      onSuccess: () => {
+        toast.success(toastMassages.TODO_DELETE_SUCCESS);
+      },
+      onError: () => {
+        toast.error(toastMassages.TODO_DELETE_ERROR);
+      }
+    });
+  };
+
+  const changeCompleteStatusHandler = ({ id, isCompleted }: ITodoUpdate) => {
+    updateTodoMutation(
+      { id, isCompleted },
+      {
+        onSuccess: () => {
+          toast.success(toastMassages.TODO_UPDATE_COMPLETE_STATUS_SUCCESS);
+        },
+        onError: () => {
+          toast.error(toastMassages.TODO_UPDATE_COMPLETE_STATUS_ERROR);
+        }
+      }
+    );
+  };
 
   if (error) {
     return <div>Error</div>;
@@ -67,8 +111,13 @@ const TodoTable = () => {
               </TableCell>
               <TableCell align="center">
                 <TodoActions
-                  deleteHandler={() => {}}
-                  todoDetailsHandler={() => {}}
+                  deleteHandler={() => {
+                    deleteTodoHandler(row.id!);
+                  }}
+                  checkboxHandler={() => {
+                    changeCompleteStatusHandler({ id: row.id!, isCompleted: !row.isCompleted });
+                  }}
+                  todoId={row.id!}
                   isCompleted={row.isCompleted}
                 />
               </TableCell>

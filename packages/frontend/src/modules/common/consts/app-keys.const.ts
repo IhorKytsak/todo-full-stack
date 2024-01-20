@@ -16,12 +16,12 @@ export const BACKEND_KEYS = {
   SERVER_URL: 'http://127.0.0.1:4200',
   ROOT: 'todos',
   CREATE: 'todos/create',
+  GETTODO: (todoId: number) => `todos/${todoId}`,
   UPDATE: (todoId: number) => `todos/update/${todoId}`,
   DELETE: (todoId: number) => `todos/delete/${todoId}`
 };
 
 export const ROUTER_KEYS = {
   ROOT: '/',
-  HOME: 'home',
-  AUTHORIZED: 'authorized'
+  TODO: 'todos/:id'
 };
