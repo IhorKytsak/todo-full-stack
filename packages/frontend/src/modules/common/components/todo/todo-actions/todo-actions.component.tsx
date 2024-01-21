@@ -2,7 +2,7 @@ import { Button, Checkbox, Tooltip } from '@mui/material';
 import { Link } from 'react-router-dom';
 
 import { ActionWrapper } from './todo-actions.styled';
-import { actionButtonNames, APP_KEYS } from '../../../consts';
+import { actionButtonNames, APP_KEYS, tooltipTitles } from '../../../consts';
 
 interface TodoActionsProps {
   todoId: number;
@@ -26,7 +26,7 @@ export const TodoActions = ({
     <Button onClick={deleteHandler} variant="outlined" size="small">
       {actionButtonNames.delete}
     </Button>
-    <Tooltip title="Indicates whether this task is complete">
+    <Tooltip title={tooltipTitles.COMPLETE_STATUS}>
       <span>
         <Checkbox
           size="small"

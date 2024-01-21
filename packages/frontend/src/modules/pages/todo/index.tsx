@@ -9,14 +9,14 @@ import {
   Typography,
   CardContent,
   Card,
-  Container
+  Container,
+  Tooltip
 } from '@mui/material';
 
 import { SPACES } from '../../theme';
-import { APP_KEYS } from '../../common/consts';
+import { APP_KEYS, actionButtonNames, tooltipTitles } from '../../common/consts';
 import todoService from '../../service/todo.service';
-import { actionButtonNames } from '../../common/consts';
-import { useModal } from '../../hooks/use-modal.hook';
+import { useModal } from '../../common/hooks/use-modal.hook';
 import Modal from '../../common/components/modal';
 import { AddEditForm } from '../../common/components/add-edit-form';
 
@@ -69,7 +69,11 @@ const TodoPage = () => {
         <FormControlLabel
           sx={switchStyles}
           value="complete"
-          control={<Switch name="Complete" color="primary" />}
+          control={
+            <Tooltip title={tooltipTitles.EDIT_TO_CHANGE}>
+              <Switch name="Complete" color="primary" />
+            </Tooltip>
+          }
           label="Complete"
           labelPlacement="start"
           checked={todo.isCompleted}
@@ -78,7 +82,11 @@ const TodoPage = () => {
         <FormControlLabel
           sx={switchStyles}
           value="private"
-          control={<Switch name="Private" color="primary" />}
+          control={
+            <Tooltip title={tooltipTitles.EDIT_TO_CHANGE}>
+              <Switch name="Private" color="primary" />
+            </Tooltip>
+          }
           label="Private"
           labelPlacement="start"
           checked={todo.isPrivate}

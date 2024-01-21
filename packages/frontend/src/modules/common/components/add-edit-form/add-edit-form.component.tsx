@@ -1,13 +1,13 @@
 import { TextField, Button, DialogActions, Switch, FormControlLabel } from '@mui/material';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 
-import { toastMassages, APP_KEYS } from '../../consts';
+import { toastMassages } from '../../consts';
 import { StyledForm } from './add-edit-form.styled';
 import { ITodo, ITodoUpdate } from '../../types/todo.types';
 import { validationSchema } from '../../../validation';
-import todoService from '../../../service/todo.service';
+import { useUpdateTodoMutation, useCreateTodoMutation } from '../../hooks/use-todo-mutations.hook';
 
 interface AddEditFormProps {
   isAddMode: boolean;
@@ -18,19 +18,8 @@ interface AddEditFormProps {
 export const AddEditForm = ({ isAddMode, closeModalHandler, initialValues }: AddEditFormProps) => {
   const queryClient = useQueryClient();
 
-  const { mutate: createTodoMutation } = useMutation({
-    mutationFn: (body: ITodo) => todoService.createTodo(body),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [APP_KEYS.QUERY_KEYS.TODOS] });
-    }
-  });
-
-  const { mutate: updateTodoMutation } = useMutation({
-    mutationFn: (body: ITodoUpdate) => todoService.updateTodo(body),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [APP_KEYS.QUERY_KEYS.TODOS] });
-    }
-  });
+  const { mutate: createTodoMutation } = useCreateTodoMutation(queryClient);
+  const { mutate: updateTodoMutation } = useUpdateTodoMutation(queryClient);
 
   const createTodo = (values: ITodo) => {
     createTodoMutation(values, {

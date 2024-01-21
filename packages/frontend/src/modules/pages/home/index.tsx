@@ -8,7 +8,7 @@ import Modal from '../../common/components/modal';
 import TodoTable from '../../common/components/todo/todo-table/todo-table.component';
 import { SPACES } from '../../theme';
 import { initialTodoValues } from '../../common/consts';
-import { useModal } from '../../hooks/use-modal.hook';
+import { useModal } from '../../common/hooks/use-modal.hook';
 
 const HomePage = () => {
   const { handleClose, handleOpen, open } = useModal();

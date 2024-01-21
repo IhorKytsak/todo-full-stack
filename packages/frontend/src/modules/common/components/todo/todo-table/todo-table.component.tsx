@@ -7,7 +7,7 @@ import {
   TableBody,
   Table
 } from '@mui/material';
-import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
+import { useQueryClient, useQuery } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 
 import { COLORS } from '../../../../theme';
@@ -15,6 +15,10 @@ import { TodoActions } from '../todo-actions';
 import { APP_KEYS, toastMassages } from '../../../consts';
 import todoService from '../../../../service/todo.service';
 import { ITodo, ITodoUpdate } from '../../../types/todo.types';
+import {
+  useUpdateTodoMutation,
+  useDeleteTodoMutation
+} from '../../../hooks/use-todo-mutations.hook';
 
 const TodoTable = () => {
   const queryClient = useQueryClient();
@@ -24,19 +28,8 @@ const TodoTable = () => {
     queryFn: () => todoService.getTodos()
   });
 
-  const { mutate: deleteTodoMutation } = useMutation({
-    mutationFn: (id: number) => todoService.deleteTodo(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [APP_KEYS.QUERY_KEYS.TODOS] });
-    }
-  });
-
-  const { mutate: updateTodoMutation } = useMutation({
-    mutationFn: (body: ITodoUpdate) => todoService.updateTodo(body),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [APP_KEYS.QUERY_KEYS.TODOS] });
-    }
-  });
+  const { mutate: deleteTodoMutation } = useDeleteTodoMutation(queryClient);
+  const { mutate: updateTodoMutation } = useUpdateTodoMutation(queryClient);
 
   const deleteTodoHandler = (id: number) => {
     deleteTodoMutation(id, {

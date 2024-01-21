@@ -23,3 +23,7 @@ export const initialTodoValues = {
   isCompleted: false,
   isPrivate: false
 };
+export const tooltipTitles = {
+  EDIT_TO_CHANGE: 'Click the edit button to change the value.',
+  COMPLETE_STATUS: 'Todo complete status.'
+};
