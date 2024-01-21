@@ -5,7 +5,7 @@ import AddIcon from '@mui/icons-material/Add';
 import ButtonWithIcon from '../../common/components/button-with-icon';
 import { AddEditForm } from '../../common/components/add-edit-form';
 import Modal from '../../common/components/modal';
-import TodoTable from '../../common/components/todo/todo-table/todo-table.component';
+import TodoContainer from '../../common/components/todo/todos-container';
 import { SPACES } from '../../theme';
 import { initialTodoValues } from '../../common/consts';
 import { useModal } from '../../common/hooks/use-modal.hook';
@@ -18,7 +18,7 @@ const HomePage = () => {
   return (
     <Container maxWidth="lg" sx={{ paddingTop: SPACES.xxl }}>
       <ButtonWithIcon onClickHandler={handleOpen} text="Add Todo" icon={<AddIcon />} />
-      <TodoTable />
+      <TodoContainer />
 
       <Modal handleClose={handleClose} open={open}>
         <AddEditForm

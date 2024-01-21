@@ -15,7 +15,8 @@ export const toastMassages = {
   TODO_UPDATE_SUCCESS: 'Todo successfully updated!',
   TODO_UPDATE_ERROR: 'Failed to update todo!',
   TODO_UPDATE_COMPLETE_STATUS_SUCCESS: 'Todo complete status updated!',
-  TODO_UPDATE_COMPLETE_STATUS_ERROR: 'Failed to update todo complete status!'
+  TODO_UPDATE_COMPLETE_STATUS_ERROR: 'Failed to update todo complete status!',
+  TODO_GET_ERROR: 'Failed to get data from server!'
 };
 export const initialTodoValues = {
   title: '',

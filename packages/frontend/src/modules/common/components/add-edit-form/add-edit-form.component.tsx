@@ -1,4 +1,11 @@
-import { TextField, Button, DialogActions, Switch, FormControlLabel } from '@mui/material';
+import {
+  TextField,
+  Button,
+  DialogActions,
+  Switch,
+  FormControlLabel,
+  Typography
+} from '@mui/material';
 import { Formik } from 'formik';
 import { toast } from 'react-toastify';
 import { useQueryClient } from '@tanstack/react-query';
@@ -58,89 +65,95 @@ export const AddEditForm = ({ isAddMode, closeModalHandler, initialValues }: Add
   };
 
   return (
-    <Formik
-      initialValues={initialValues}
-      onSubmit={(values) => {
-        onSubmit(values);
-      }}
-      validationSchema={validationSchema}
-    >
-      {(props) => {
-        const {
-          values,
-          touched,
-          errors,
-          dirty,
-          isSubmitting,
-          handleChange,
-          handleBlur,
-          handleSubmit,
-          handleReset
-        } = props;
-        return (
-          <StyledForm onSubmit={handleSubmit}>
-            <TextField
-              sx={{ display: 'flex' }}
-              error={Boolean(errors.title && touched.title)}
-              label="Title"
-              name="title"
-              value={values.title}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              helperText={errors.title && touched.title && errors.title}
-              margin="normal"
-            />
+    <>
+      <Typography variant="h5" gutterBottom>
+        {isAddMode ? 'New Todo' : 'Edit Todo'}
+      </Typography>
+      <Formik
+        initialValues={initialValues}
+        onSubmit={(values) => {
+          onSubmit(values);
+        }}
+        validationSchema={validationSchema}
+      >
+        {(props) => {
+          const {
+            values,
+            touched,
+            errors,
+            dirty,
+            isValid,
+            isSubmitting,
+            handleChange,
+            handleBlur,
+            handleSubmit,
+            handleReset
+          } = props;
+          return (
+            <StyledForm onSubmit={handleSubmit}>
+              <TextField
+                sx={{ display: 'flex' }}
+                error={Boolean(errors.title && touched.title)}
+                label="Title"
+                name="title"
+                value={values.title}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                helperText={errors.title && touched.title && errors.title}
+                margin="normal"
+              />
 
-            <TextField
-              sx={{ display: 'flex' }}
-              error={Boolean(errors.title && touched.title)}
-              label="Description"
-              name="description"
-              value={values.description}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              helperText={errors.description && touched.description && errors.description}
-              margin="normal"
-            />
+              <TextField
+                sx={{ display: 'flex' }}
+                error={Boolean(errors.description && touched.description)}
+                label="Description"
+                name="description"
+                value={values.description}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                helperText={errors.description && touched.description && errors.description}
+                margin="normal"
+              />
 
-            <FormControlLabel
-              sx={{ display: 'flex', justifyContent: 'space-between', m: 1 }}
-              value="complete"
-              control={<Switch name="isCompleted" color="primary" />}
-              label="Complete"
-              name="isCompleted"
-              labelPlacement="start"
-              checked={values.isCompleted}
-              onChange={handleChange}
-            />
+              <FormControlLabel
+                sx={{ display: 'flex', justifyContent: 'space-between', m: 1 }}
+                value="complete"
+                control={<Switch name="isCompleted" color="primary" />}
+                label="Complete"
+                name="isCompleted"
+                labelPlacement="start"
+                checked={values.isCompleted}
+                onChange={handleChange}
+              />
 
-            <FormControlLabel
-              sx={{ display: 'flex', justifyContent: 'space-between', m: 1 }}
-              value="private"
-              control={<Switch name="isPrivate" color="primary" />}
-              label="Private"
-              name="isPrivate"
-              labelPlacement="start"
-              checked={values.isPrivate}
-              onChange={handleChange}
-            />
+              <FormControlLabel
+                sx={{ display: 'flex', justifyContent: 'space-between', m: 1 }}
+                value="private"
+                control={<Switch name="isPrivate" color="primary" />}
+                label="Private"
+                name="isPrivate"
+                labelPlacement="start"
+                checked={values.isPrivate}
+                onChange={handleChange}
+              />
 
-            <DialogActions>
-              <Button
-                type="button"
-                className="outline"
-                onClick={handleReset}
-                disabled={!dirty || isSubmitting}
-              >
-                Reset
-              </Button>
-              <Button type="submit" disabled={isSubmitting}>
-                Submit
-              </Button>
-            </DialogActions>
-          </StyledForm>
-        );
-      }}
-    </Formik>
+              <DialogActions>
+                <Button
+                  type="button"
+                  className="outline"
+                  onClick={handleReset}
+                  disabled={!dirty || isSubmitting}
+                >
+                  Reset
+                </Button>
+                <Button type="submit" disabled={isSubmitting || !dirty || !isValid}>
+                  Submit
+                </Button>
+              </DialogActions>
+            </StyledForm>
+          );
+        }}
+      </Formik>
+    </>
   );
 };

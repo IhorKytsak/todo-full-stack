@@ -19,11 +19,11 @@ export const TodoActions = ({
 }: TodoActionsProps) => (
   <ActionWrapper>
     <Link to={APP_KEYS.BACKEND_KEYS.GETTODO(todoId)}>
-      <Button variant="outlined" size="small">
+      <Button variant="outlined" size="small" sx={{ mr: 2 }}>
         {actionButtonNames.view}
       </Button>
     </Link>
-    <Button onClick={deleteHandler} variant="outlined" size="small">
+    <Button onClick={deleteHandler} variant="outlined" size="small" sx={{ mr: 4 }}>
       {actionButtonNames.delete}
     </Button>
     <Tooltip title={tooltipTitles.COMPLETE_STATUS}>
