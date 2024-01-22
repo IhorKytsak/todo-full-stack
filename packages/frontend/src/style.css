@@ -21,3 +21,7 @@ iframe {
   left: 125px;
   overflow: visible;
 }
+
+a {
+  text-decoration: none;
+}

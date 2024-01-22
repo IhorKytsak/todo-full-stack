@@ -8,24 +8,20 @@ export const STORAGE_KEYS = {
 
 // React-query keys
 export const QUERY_KEYS = {
-  EXAMPLE: 'EXAMPLE',
-  TOKEN: 'TOKEN',
-  STATISTIC: 'statistic',
-  TRENDING: 'trending'
+  TODOS: 'todos'
 };
 
 // Backend Routes
 export const BACKEND_KEYS = {
-  EXAMPLE: 'example',
-  COURSES: 'courses',
-  ARTICLES: 'articles',
-  STATISTIC: 'statistic',
-  TRENDING: 'trending',
-  FEATURED_ARTICLES: 'featured_articles'
+  SERVER_URL: 'http://127.0.0.1:4200',
+  ROOT: 'todos',
+  CREATE: 'todos/create',
+  GETTODO: (todoId: number) => `todos/${todoId}`,
+  UPDATE: (todoId: number) => `todos/update/${todoId}`,
+  DELETE: (todoId: number) => `todos/delete/${todoId}`
 };
 
 export const ROUTER_KEYS = {
   ROOT: '/',
-  HOME: 'home',
-  AUTHORIZED: 'authorized'
+  TODO: 'todos/:id'
 };

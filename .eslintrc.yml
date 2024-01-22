@@ -73,6 +73,7 @@ rules:
   react/jsx-one-expression-per-line: 'off'
   # This is for React 15
   react/prop-types: 'off'
+  react/react-in-jsx-scope: "off"
 
   # ⭐ General rules
   # Fixing conflict between prettier and eslint with this rule
