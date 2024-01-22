@@ -1,4 +1,3 @@
-import { useQuery } from '@tanstack/react-query';
 import { useParams } from 'react-router-dom';
 import { Container } from '@mui/material';
 import { toast } from 'react-toastify';
@@ -7,10 +6,10 @@ import Modal from '../../common/components/modal';
 import { AddEditForm } from '../../common/components/add-edit-form';
 import TodoCard from '../../common/components/todo/todo-card';
 import Loader from '../../common/components/loader';
-import todoService from '../../service/todo.service';
 import { SPACES } from '../../theme';
-import { APP_KEYS, toastMassages } from '../../common/consts';
+import { toastMassages } from '../../common/consts';
 import { useModal } from '../../common/hooks/use-modal.hook';
+import { useGetTodoQuery } from '../../common/hooks/use-todo-queries.hook';
 
 const TodoPage = () => {
   const { handleClose, handleOpen, open } = useModal();
@@ -18,14 +17,7 @@ const TodoPage = () => {
   const isAddMode = !id;
   const todoId = Number(id);
 
-  const {
-    isPending,
-    error,
-    data: todo
-  } = useQuery({
-    queryKey: [APP_KEYS.QUERY_KEYS.TODOS, todoId],
-    queryFn: () => todoService.getTodo(todoId)
-  });
+  const { isPending, error, data: todo } = useGetTodoQuery(todoId);
 
   if (error) {
     toast.error(toastMassages.TODO_GET_ERROR);

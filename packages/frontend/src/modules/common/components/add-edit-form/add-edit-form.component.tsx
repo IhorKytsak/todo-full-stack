@@ -7,10 +7,8 @@ import {
   Typography
 } from '@mui/material';
 import { Formik } from 'formik';
-import { toast } from 'react-toastify';
 import { useQueryClient } from '@tanstack/react-query';
 
-import { toastMassages } from '../../consts';
 import { StyledForm } from './add-edit-form.styled';
 import { ITodo, ITodoUpdate } from '../../types/todo.types';
 import { validationSchema } from '../../../validation';
@@ -25,35 +23,15 @@ interface AddEditFormProps {
 export const AddEditForm = ({ isAddMode, closeModalHandler, initialValues }: AddEditFormProps) => {
   const queryClient = useQueryClient();
 
-  const { mutate: createTodoMutation } = useCreateTodoMutation(queryClient);
-  const { mutate: updateTodoMutation } = useUpdateTodoMutation(queryClient);
+  const { mutate: createTodoMutation } = useCreateTodoMutation(queryClient, closeModalHandler);
+  const { mutate: updateTodoMutation } = useUpdateTodoMutation(queryClient, closeModalHandler);
 
   const createTodo = (values: ITodo) => {
-    createTodoMutation(values, {
-      onSuccess: () => {
-        toast.success(toastMassages.TODO_ADD_SUCCESS);
-      },
-      onError: () => {
-        toast.error(toastMassages.TODO_ADD_ERROR);
-      },
-      onSettled: () => {
-        closeModalHandler();
-      }
-    });
+    createTodoMutation(values);
   };
 
   const updateTodo = (values: ITodoUpdate) => {
-    updateTodoMutation(values, {
-      onSuccess: () => {
-        toast.success(toastMassages.TODO_UPDATE_SUCCESS);
-      },
-      onError: () => {
-        toast.error(toastMassages.TODO_UPDATE_ERROR);
-      },
-      onSettled: () => {
-        closeModalHandler();
-      }
-    });
+    updateTodoMutation(values);
   };
 
   const onSubmit = (values: ITodo | ITodoUpdate) => {

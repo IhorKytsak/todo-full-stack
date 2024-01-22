@@ -1,53 +1,33 @@
 import { Box } from '@mui/material';
-import { useQueryClient, useQuery } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import { toast } from 'react-toastify';
 
 import TodosTable from '../todos-table';
 import TodosList from '../todos-list';
 import TodoSwiper from '../todo-swiper';
 import Loader from '../../loader';
-import { APP_KEYS, toastMassages } from '../../../consts';
-import todoService from '../../../../service/todo.service';
+import { toastMassages } from '../../../consts';
 import { ITodoUpdate } from '../../../types/todo.types';
 import {
   useUpdateTodoMutation,
   useDeleteTodoMutation
 } from '../../../hooks/use-todo-mutations.hook';
 
+import { useGetTodosQuery } from '../../../hooks/use-todo-queries.hook';
+
 const TodoContainer = () => {
   const queryClient = useQueryClient();
 
-  const { isPending, error, data } = useQuery({
-    queryKey: [APP_KEYS.QUERY_KEYS.TODOS],
-    queryFn: () => todoService.getTodos()
-  });
-
+  const { isPending, error, data } = useGetTodosQuery();
   const { mutate: deleteTodoMutation } = useDeleteTodoMutation(queryClient);
   const { mutate: updateTodoMutation } = useUpdateTodoMutation(queryClient);
 
   const deleteTodoHandler = (id: number) => {
-    deleteTodoMutation(id, {
-      onSuccess: () => {
-        toast.success(toastMassages.TODO_DELETE_SUCCESS);
-      },
-      onError: () => {
-        toast.error(toastMassages.TODO_DELETE_ERROR);
-      }
-    });
+    deleteTodoMutation(id);
   };
 
   const changeCompleteStatusHandler = ({ id, isCompleted }: ITodoUpdate) => {
-    updateTodoMutation(
-      { id, isCompleted },
-      {
-        onSuccess: () => {
-          toast.success(toastMassages.TODO_UPDATE_COMPLETE_STATUS_SUCCESS);
-        },
-        onError: () => {
-          toast.error(toastMassages.TODO_UPDATE_COMPLETE_STATUS_ERROR);
-        }
-      }
-    );
+    updateTodoMutation({ id, isCompleted });
   };
 
   if (error) {
