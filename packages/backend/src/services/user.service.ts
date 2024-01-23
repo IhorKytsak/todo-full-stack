@@ -24,4 +24,34 @@ export default class UserService {
 
     return user;
   }
+
+  async getUserForPassRecovery(email: string) {
+    const user = await User.findOneBy({ email });
+
+    if (!user) {
+      throw new Error(errorMassages.USER_NOT_FOUND);
+    }
+
+    return user;
+  }
+
+  async changePassword(userId: number, oldPassword: string, newPassword: string) {
+    const user = await User.findOneBy({ id: userId });
+
+    if (!user) {
+      throw new Error(errorMassages.USER_NOT_FOUND);
+    }
+
+    const isValidPassword = await comparePasswords(oldPassword, user.password);
+
+    if (!isValidPassword) {
+      throw new Error(errorMassages.WRONG_PASSWORD);
+    }
+
+    const hashedPass = await hashPassword(newPassword);
+
+    user.password = hashedPass;
+
+    await user.save();
+  }
 }
