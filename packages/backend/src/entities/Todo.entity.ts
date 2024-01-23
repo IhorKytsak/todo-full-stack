@@ -1,7 +1,10 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+
+// eslint-disable-next-line import/no-cycle
+import { User } from './User.entity';
 
 @Entity()
-export class TodoEntity extends BaseEntity {
+export class Todo extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -20,4 +23,7 @@ export class TodoEntity extends BaseEntity {
     default: false
   })
   isPrivate: boolean;
+
+  @ManyToOne(() => User, (user) => user.todos)
+  user: User;
 }

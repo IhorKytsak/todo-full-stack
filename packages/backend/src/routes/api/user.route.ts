@@ -1,12 +1,20 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
+import userController from '../../controllers/user.controller';
+import { validateReqBody } from '../../middlewares/validation.middleware';
+import { userValidationSchema } from '../../validation/validation.schema';
+import { tryCatch } from '../../middlewares/try-catch.middleware';
 
-const router: Router = Router();
+const userRouter: Router = Router();
 
-// @route   POST api/user
-// @desc    Register user given their email and password, returns the token upon successful registration
-// @access  Public
-router.post('/register', async (_: Request, res: Response) => {
-  res.send('Add registration logic there');
-});
+userRouter.post(
+  '/register',
+  validateReqBody(userValidationSchema),
+  tryCatch(userController.registerUser.bind(userController))
+);
+userRouter.post(
+  '/login',
+  validateReqBody(userValidationSchema),
+  tryCatch(userController.loginUser.bind(userController))
+);
 
-export default router;
+export default userRouter;
