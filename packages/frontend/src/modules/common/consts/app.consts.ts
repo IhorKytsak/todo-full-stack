@@ -7,7 +7,7 @@ export const actionButtonNames = {
   back: 'Back',
   backHome: 'Back Home'
 };
-export const toastMassages = {
+export const toastMessages = {
   TODO_ADD_SUCCESS: 'Todo successfully added!',
   TODO_ADD_ERROR: 'Failed to add todo!',
   TODO_DELETE_SUCCESS: 'Todo successfully deleted!',
@@ -16,8 +16,19 @@ export const toastMassages = {
   TODO_UPDATE_ERROR: 'Failed to update todo!',
   TODO_UPDATE_COMPLETE_STATUS_SUCCESS: 'Todo complete status updated!',
   TODO_UPDATE_COMPLETE_STATUS_ERROR: 'Failed to update todo complete status!',
-  TODO_GET_ERROR: 'Failed to get data from server!'
+  TODO_GET_ERROR: 'Failed to get data from server!',
+  USER_REGISTER_SUCCESS: 'Registration is successful!',
+  USER_REGISTER_ERROR: 'Failed to register!',
+  USER_LOGIN_SUCCESS: 'Login is successful!',
+  USER_LOGIN_ERROR: 'Failed to log in!'
 };
+
+export const validationMessages = {
+  SHORT: 'Too short',
+  LONG: 'Too long',
+  REQUIRED: 'Is required'
+};
+
 export const initialTodoValues = {
   title: '',
   description: '',

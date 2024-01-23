@@ -29,7 +29,7 @@ export class UserController {
     const user = await this.userService.loginUser(email, password);
     const token = jwt.sign({ email, id: user.id }, process.env.JWT_SECRET);
 
-    res.send({ token });
+    res.send({ token, user: { id: user.id, email: user.email } });
   }
 
   async recoverUserPassword(req: Request, res: Response) {

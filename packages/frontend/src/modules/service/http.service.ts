@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-import { BACKEND_KEYS } from '../common/consts/app-keys.const';
+import { BACKEND_KEYS, STORAGE_KEYS } from '../common/consts/app-keys.const';
 
 class HttpSerivce {
   baseUrl: string;
@@ -20,7 +20,7 @@ class HttpSerivce {
 
   private populateTokenToHeaderConfig() {
     return {
-      Authorization: localStorage.getItem('token')
+      Authorization: localStorage.getItem(STORAGE_KEYS.TOKEN)
     };
   }
 
