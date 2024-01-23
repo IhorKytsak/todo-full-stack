@@ -8,17 +8,28 @@ export const STORAGE_KEYS = {
 
 // React-query keys
 export const QUERY_KEYS = {
-  TODOS: 'todos'
+  TODOS: 'todos',
+  AUTH: 'auth'
 };
 
 // Backend Routes
 export const BACKEND_KEYS = {
   SERVER_URL: 'http://127.0.0.1:4200',
-  ROOT: 'todos',
-  CREATE: 'todos/create',
-  GETTODO: (todoId: number) => `todos/${todoId}`,
-  UPDATE: (todoId: number) => `todos/update/${todoId}`,
-  DELETE: (todoId: number) => `todos/delete/${todoId}`
+  TODOS: {
+    ROOT: 'todos',
+    CREATE: 'todos/create',
+    GETTODO: (todoId: number) => `todos/${todoId}`,
+    UPDATE: (todoId: number) => `todos/update/${todoId}`,
+    DELETE: (todoId: number) => `todos/delete/${todoId}`
+  },
+  AUTH: {
+    REGISRER: 'user/register',
+    LOGIN: 'user/login',
+    RECOVER_PASS: 'user/recover-password',
+    CHANGE_PASS: (userId: number) => `user/change-password/${userId}`
+    // LOGOUT: 'user/login',
+    // USER: 'user'
+  }
 };
 
 export const ROUTER_KEYS = {

@@ -6,7 +6,7 @@ import { ITodo, ITodoUpdate } from '../common/types/todo.types';
 class TodoService extends HttpService {
   async getTodos() {
     const data = await this.get({
-      url: BACKEND_KEYS.ROOT
+      url: BACKEND_KEYS.TODOS.ROOT
     });
 
     return data.map((todo: ITodo) => createTodoModel(todo));
@@ -14,7 +14,7 @@ class TodoService extends HttpService {
 
   async getTodo(id: number) {
     const data = await this.get({
-      url: BACKEND_KEYS.GETTODO(id)
+      url: BACKEND_KEYS.TODOS.GETTODO(id)
     });
 
     return createTodoModel(data);
@@ -23,7 +23,7 @@ class TodoService extends HttpService {
   async createTodo(body: ITodo) {
     const data = await this.put({
       method: 'post',
-      url: BACKEND_KEYS.CREATE,
+      url: BACKEND_KEYS.TODOS.CREATE,
       data: body
     });
 
@@ -33,7 +33,7 @@ class TodoService extends HttpService {
   async updateTodo({ id, ...body }: ITodoUpdate) {
     const data = await this.put({
       method: 'put',
-      url: BACKEND_KEYS.UPDATE(id!),
+      url: BACKEND_KEYS.TODOS.UPDATE(id!),
       data: body
     });
 
@@ -43,7 +43,7 @@ class TodoService extends HttpService {
   async deleteTodo(id: number) {
     const data = await this.delete({
       method: 'delete',
-      url: BACKEND_KEYS.DELETE(id)
+      url: BACKEND_KEYS.TODOS.DELETE(id)
     });
 
     return data;

@@ -6,7 +6,7 @@ import TodosTable from '../todos-table';
 import TodosList from '../todos-list';
 import TodoSwiper from '../todo-swiper';
 import Loader from '../../loader';
-import { toastMassages } from '../../../consts';
+import { toastMessages } from '../../../consts';
 import { ITodoUpdate } from '../../../types/todo.types';
 import {
   useUpdateTodoMutation,
@@ -31,7 +31,7 @@ const TodoContainer = () => {
   };
 
   if (error) {
-    toast.error(toastMassages.TODO_GET_ERROR);
+    toast.error(toastMessages.TODO_GET_ERROR);
   }
 
   if (isPending) {
