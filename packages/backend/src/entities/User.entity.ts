@@ -1,10 +1,20 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, Entity, OneToMany, PrimaryGeneratedColumn, Unique } from 'typeorm';
+
+// eslint-disable-next-line import/no-cycle
+import { Todo } from './Todo.entity';
 
 @Entity()
-export class UserEntity extends BaseEntity {
+@Unique(['email'])
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id: string;
+  id: number;
+
+  @Column({ name: 'email' })
+  email: string;
 
   @Column()
-  email: string;
+  password: string;
+
+  @OneToMany(() => Todo, (todo) => todo.user)
+  todos: Todo[];
 }

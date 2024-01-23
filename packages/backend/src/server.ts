@@ -1,6 +1,7 @@
 import bodyParser from 'body-parser';
 import express from 'express';
 import cors from 'cors';
+import passport from 'passport';
 import 'dotenv/config';
 
 import AppRouter from './routes';
@@ -40,6 +41,7 @@ app.use(
 app.set('port', process.env.PORT || 4200);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(passport.initialize());
 app.use(errorHandler);
 
 router.init();

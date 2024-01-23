@@ -13,3 +13,17 @@ export const todoUpdateValidationSchema = Joi.object({
   isCompleted: Joi.boolean(),
   isPrivate: Joi.boolean()
 });
+
+export const userValidationSchema = Joi.object({
+  email: Joi.string().email().required(),
+  password: Joi.string().min(5).max(30).required()
+});
+
+export const passwordRecoveryValidationSchema = Joi.object({
+  email: Joi.string().email().required()
+});
+
+export const changePasswordValidationSchema = Joi.object({
+  oldPassword: Joi.string().min(5).max(30).required(),
+  newPassword: Joi.string().min(5).max(30).required()
+});

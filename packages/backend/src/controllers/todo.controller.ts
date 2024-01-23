@@ -1,24 +1,29 @@
 import { Response, Request } from 'express';
+
+import { User } from '../entities/User.entity';
 import TodoService from '../services/todo.service';
 
 export class TodoController {
   constructor(private todoService: TodoService) {}
 
-  async getAllTodo(_: Request, res: Response) {
-    const todos = await this.todoService.findAll();
+  async getAllTodo(req: Request, res: Response) {
+    const { id: userId } = req.user as User;
+    const todos = await this.todoService.findAll(userId);
 
     res.send(todos);
   }
 
   async getTodo(req: Request, res: Response) {
-    const id = Number(req.params.id);
-    const todo = await this.todoService.findOne(id);
+    const { id: userId } = req.user as User;
+    const todoId = Number(req.params.id);
+    const todo = await this.todoService.findOne(userId, todoId);
 
     res.send(todo);
   }
 
-  async addTodo({ body }: Request, res: Response) {
-    const todo = await this.todoService.addTodo(body);
+  async addTodo({ body, user }: Request, res: Response) {
+    const { id: userId } = user as User;
+    const todo = await this.todoService.addTodo(userId, body);
 
     res.send(todo);
   }
