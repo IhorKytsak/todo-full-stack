@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import Modal from '../../common/components/modal';
 import { AddEditForm } from '../../common/components/add-edit-form';
 import TodoCard from '../../common/components/todo/todo-card';
-import Loader from '../../common/components/loader';
+import { BackdropLoader } from '../../common/components/loader';
 import { SPACES } from '../../theme';
 import { toastMessages } from '../../common/consts';
 import { useModal } from '../../common/hooks/use-modal.hook';
@@ -24,7 +24,7 @@ const TodoPage = () => {
   }
 
   if (isPending) {
-    return <Loader />;
+    return <BackdropLoader />;
   }
 
   return (

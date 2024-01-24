@@ -12,6 +12,12 @@ export interface IUserRecoverPass {
   email: string;
 }
 
+export interface IUserRecoverPassConfirmed {
+  password: string;
+  token: string;
+  id: number;
+}
+
 export interface IUserChangePass {
   id: number;
   oldPassword: string;

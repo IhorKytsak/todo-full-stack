@@ -18,7 +18,7 @@ export const TodoActions = ({
   todoId
 }: TodoActionsProps) => (
   <ActionWrapper>
-    <Link to={APP_KEYS.BACKEND_KEYS.GETTODO(todoId)}>
+    <Link to={APP_KEYS.BACKEND_KEYS.TODOS.GETTODO(todoId)}>
       <Button variant="outlined" size="small" sx={{ mr: 2 }}>
         {actionButtonNames.view}
       </Button>

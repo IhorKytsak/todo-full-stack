@@ -1,37 +1,59 @@
 import React, { createContext, useState, ReactNode, useMemo } from 'react';
+import { useQueryClient } from '@tanstack/react-query';
+
+import { useLoginMutation } from '../common/hooks/use-auth-mutatiuns.hook';
+import { IUserRegisterLogin, IUser } from '../common/types/user.types';
+import { APP_KEYS } from '../common/consts';
+import { checkToken, getItem, removeItem } from '../utils/localStorage.util.';
 
 export interface AuthContextProps {
   isLoggedIn: boolean;
-  login: () => void;
+  login: (credentials: IUserRegisterLogin) => void;
   logout: () => void;
+  isError: boolean;
+  isPending: boolean;
+  user: IUser | null;
 }
-
-export const AuthContext = createContext<AuthContextProps | undefined>(undefined);
-
 interface AuthProviderProps {
   children: ReactNode;
 }
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [isLoggedIn, setLoggedIn] = useState(false);
+export const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
-  const login = () => {
-    // Implement your login logic here
-    setLoggedIn(true);
+export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const queryClient = useQueryClient();
+
+  const [isLoggedIn, setLoggedIn] = useState(() => checkToken());
+  const [user, setUser] = useState<null | IUser>(() => getItem(APP_KEYS.STORAGE_KEYS.USER));
+
+  const { mutate, isPending, isError } = useLoginMutation({
+    queryClient,
+    loginHandler: setLoggedIn,
+    userHandler: setUser
+  });
+
+  const login = (credentials: IUserRegisterLogin) => {
+    mutate(credentials);
   };
 
   const logout = () => {
-    // Implement your logout logic here
+    removeItem(APP_KEYS.STORAGE_KEYS.TOKEN);
+    removeItem(APP_KEYS.STORAGE_KEYS.USER);
+
+    setUser(null);
     setLoggedIn(false);
   };
 
   const authContextValue = useMemo(
     () => ({
       isLoggedIn,
+      isError,
+      isPending,
+      user,
       login,
       logout
     }),
-    [isLoggedIn]
+    [isLoggedIn, isPending, isError, user]
   );
 
   return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;

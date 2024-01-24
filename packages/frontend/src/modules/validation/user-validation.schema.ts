@@ -11,7 +11,7 @@ export const userFormSchema = yup.object({
     .required(validationMessages.REQUIRED)
 });
 
-export const resetPasswordSchema = yup.object({
+export const changePasswordSchema = yup.object({
   oldPassword: yup
     .string()
     .min(5, validationMessages.SHORT)
@@ -24,6 +24,14 @@ export const resetPasswordSchema = yup.object({
     .required(validationMessages.REQUIRED)
 });
 
-export const requestResetSchema = yup.object({
+export const recoverPasswordSchema = yup.object({
   email: yup.string().email().required(validationMessages.REQUIRED)
+});
+
+export const recoverConfirmationPasswordSchema = yup.object({
+  password: yup
+    .string()
+    .min(5, validationMessages.SHORT)
+    .max(30, validationMessages.LONG)
+    .required(validationMessages.REQUIRED)
 });

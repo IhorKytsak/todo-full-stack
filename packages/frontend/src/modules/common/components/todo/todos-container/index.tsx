@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import TodosTable from '../todos-table';
 import TodosList from '../todos-list';
 import TodoSwiper from '../todo-swiper';
-import Loader from '../../loader';
+import { BackdropLoader } from '../../loader';
 import { toastMessages } from '../../../consts';
 import { ITodoUpdate } from '../../../types/todo.types';
 import {
@@ -35,7 +35,7 @@ const TodoContainer = () => {
   }
 
   if (isPending) {
-    return <Loader />;
+    return <BackdropLoader />;
   }
 
   return (

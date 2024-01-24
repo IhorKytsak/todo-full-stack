@@ -4,7 +4,8 @@ import { validateReqBody } from '../../middlewares/validation.middleware';
 import {
   userValidationSchema,
   passwordRecoveryValidationSchema,
-  changePasswordValidationSchema
+  changePasswordValidationSchema,
+  passdRecoveryConfirmedValidationSchema
 } from '../../validation/validation.schema';
 import { tryCatch } from '../../middlewares/try-catch.middleware';
 import { authRequired } from '../../middlewares/auth.middleware';
@@ -25,6 +26,12 @@ userRouter.post(
   '/recover-password',
   validateReqBody(passwordRecoveryValidationSchema),
   tryCatch(userController.recoverUserPassword.bind(userController))
+);
+
+userRouter.post(
+  '/recover-password/:id/:token',
+  validateReqBody(passdRecoveryConfirmedValidationSchema),
+  tryCatch(userController.recoverUserPasswordConfirmed.bind(userController))
 );
 
 userRouter.post(

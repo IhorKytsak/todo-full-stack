@@ -1,14 +1,20 @@
 import HttpService from './http.service';
 
 import { BACKEND_KEYS, STORAGE_KEYS } from '../common/consts/app-keys.const';
-import { IUserRegisterLogin, IUserRecoverPass, IUserChangePass } from '../common/types/user.types';
+import {
+  IUserRegisterLogin,
+  IUserRecoverPass,
+  IUserChangePass,
+  IUserRecoverPassConfirmed
+} from '../common/types/user.types';
+import { setItem } from '../utils/localStorage.util.';
 
 class AuthService extends HttpService {
   async registerUser(body: IUserRegisterLogin) {
     const data = await this.put(
       {
         method: 'post',
-        url: BACKEND_KEYS.AUTH.REGISRER,
+        url: BACKEND_KEYS.AUTH.REGISTER,
         data: body
       },
       false
@@ -29,7 +35,8 @@ class AuthService extends HttpService {
     );
 
     if (token) {
-      localStorage.setItem(STORAGE_KEYS.TOKEN, `Bearer ${token}`);
+      setItem(STORAGE_KEYS.TOKEN, `Bearer ${token}`);
+      setItem(STORAGE_KEYS.USER, user);
     }
 
     return user;
@@ -41,6 +48,19 @@ class AuthService extends HttpService {
         method: 'post',
         url: BACKEND_KEYS.AUTH.RECOVER_PASS,
         data: body
+      },
+      false
+    );
+
+    return data;
+  }
+
+  async recoverPasswordConfirmed({ id, token, password }: IUserRecoverPassConfirmed) {
+    const data = await this.put(
+      {
+        method: 'post',
+        url: BACKEND_KEYS.AUTH.RECOVER_PASS_CONFIRMED(id, token),
+        data: { password }
       },
       false
     );

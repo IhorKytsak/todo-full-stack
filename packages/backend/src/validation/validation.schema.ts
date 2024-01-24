@@ -23,6 +23,10 @@ export const passwordRecoveryValidationSchema = Joi.object({
   email: Joi.string().email().required()
 });
 
+export const passdRecoveryConfirmedValidationSchema = Joi.object({
+  password: Joi.string().min(5).max(30).required()
+});
+
 export const changePasswordValidationSchema = Joi.object({
   oldPassword: Joi.string().min(5).max(30).required(),
   newPassword: Joi.string().min(5).max(30).required()

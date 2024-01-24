@@ -48,7 +48,7 @@ const TodoCard = ({ todo, handleOpenEdit }: TodoCardProps) => (
     />
 
     <CardActions>
-      <Link to={APP_KEYS.ROUTER_KEYS.ROOT}>
+      <Link to={APP_KEYS.ROUTER_KEYS.HOME}>
         <Button variant="text" size="medium">
           {actionButtonNames.back}
         </Button>

@@ -34,10 +34,19 @@ export class UserController {
 
   async recoverUserPassword(req: Request, res: Response) {
     const { email } = req.body;
-    const { id } = await this.userService.getUserForPassRecovery(email);
-    mailService.sendResetPassword(email, `${process.env.FRONT_END}/reset/${id}`);
+    const link = await this.userService.getLinkForPassRecovery(email);
+    mailService.sendResetPassword(email, link);
 
     res.send({ message: 'Check your email' });
+  }
+
+  async recoverUserPasswordConfirmed(req: Request, res: Response) {
+    const { id, token } = req.params;
+    const { password } = req.body;
+
+    await this.userService.setNewUserPassword(Number(id), token, password);
+
+    res.send({ message: 'Password changed successfully' });
   }
 
   async changeUserPassword(req: Request, res: Response) {

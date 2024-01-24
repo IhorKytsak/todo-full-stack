@@ -1,3 +1,5 @@
+import jwt from 'jsonwebtoken';
+
 import { hashPassword, comparePasswords } from '../utils/auth.util';
 import { User } from '../entities/User.entity';
 import { errorMassages } from '../consts/error-massage.const';
@@ -25,14 +27,41 @@ export default class UserService {
     return user;
   }
 
-  async getUserForPassRecovery(email: string) {
+  async getLinkForPassRecovery(email: string) {
     const user = await User.findOneBy({ email });
 
     if (!user) {
       throw new Error(errorMassages.USER_NOT_FOUND);
     }
 
-    return user;
+    const secret = process.env.JWT_SECRET + user.password;
+    const token = jwt.sign({ email: user.email, id: user.id }, secret, { expiresIn: '10m' });
+
+    const link = `${process.env.FRONT_END}/reset/${user.id}/${token}`;
+
+    return link;
+  }
+
+  async setNewUserPassword(id: number, token: string, password: string) {
+    const user = await User.findOneBy({ id });
+
+    if (!user) {
+      throw new Error(errorMassages.USER_NOT_FOUND);
+    }
+
+    const secret = process.env.JWT_SECRET + user.password;
+
+    try {
+      jwt.verify(token, secret);
+
+      const hashedPass = await hashPassword(password);
+
+      user.password = hashedPass;
+
+      await user.save();
+    } catch (error) {
+      throw new Error(errorMassages.NOT_VERIFIED);
+    }
   }
 
   async changePassword(userId: number, oldPassword: string, newPassword: string) {
