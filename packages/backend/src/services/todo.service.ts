@@ -7,21 +7,27 @@ import { errorMassages } from '../consts/error-massage.const';
 
 export default class TodoService {
   async findAll(userId: number, query: ITodoQuery): Promise<ITodo[]> {
-    const findBy: ITodoFilter = { user: { id: userId } };
+    const queryBuilder = Todo.createQueryBuilder('todo').where('todo.user.id = :userId', {
+      userId
+    });
 
     if (query.search) {
-      findBy.title = Like(`%${query.search}%`);
+      queryBuilder.andWhere('todo.title LIKE :search', { search: `%${query.search}%` });
     }
 
     if (query.isCompleted) {
-      findBy.isCompleted = query.isCompleted === 'true';
+      queryBuilder.andWhere('todo.isCompleted = :isCompleted', {
+        isCompleted: query.isCompleted === 'true'
+      });
     }
 
     if (query.isPrivate) {
-      findBy.isPrivate = query.isPrivate === 'true';
+      queryBuilder.andWhere('todo.isPrivate = :isPrivate', {
+        isPrivate: query.isPrivate === 'true'
+      });
     }
 
-    const todos = await Todo.find({ where: findBy, order: { id: 'DESC' } });
+    const todos = await queryBuilder.orderBy('todo.id', 'DESC').getMany();
     return todos;
   }
 
