@@ -8,6 +8,8 @@ export interface ITodo {
 }
 
 export interface ITodoQuery {
+  page?: string;
+  pageSize?: string;
   search?: string;
   isCompleted?: 'true' | 'false';
   isPrivate?: 'true' | 'false';

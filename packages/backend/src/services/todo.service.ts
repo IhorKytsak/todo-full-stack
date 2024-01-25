@@ -6,23 +6,34 @@ import { ITodoQuery, ITodoFilter, ITodo } from '../types/todos.type';
 import { errorMassages } from '../consts/error-massage.const';
 
 export default class TodoService {
-  async findAll(userId: number, query: ITodoQuery): Promise<ITodo[]> {
+  async findAll(
+    userId: number,
+    { search, isCompleted, isPrivate, page = '1', pageSize = '5' }: ITodoQuery
+  ): Promise<{ todos: ITodo[]; totalPages: number }> {
     const findBy: ITodoFilter = { user: { id: userId } };
 
-    if (query.search) {
-      findBy.title = Like(`%${query.search}%`);
+    if (search) {
+      findBy.title = Like(`%${search}%`);
     }
 
-    if (query.isCompleted) {
-      findBy.isCompleted = query.isCompleted === 'true';
+    if (isCompleted) {
+      findBy.isCompleted = isCompleted === 'true';
     }
 
-    if (query.isPrivate) {
-      findBy.isPrivate = query.isPrivate === 'true';
+    if (isPrivate) {
+      findBy.isPrivate = isPrivate === 'true';
     }
 
-    const todos = await Todo.find({ where: findBy, order: { id: 'DESC' } });
-    return todos;
+    const [todos, totalCount] = await Todo.findAndCount({
+      where: findBy,
+      order: { id: 'DESC' },
+      take: +pageSize,
+      skip: (+page - 1) * +pageSize
+    });
+
+    const totalPages = Math.ceil(totalCount / +pageSize);
+
+    return { todos, totalPages };
   }
 
   async findOne(userId: number, id: number): Promise<ITodo | null> {
