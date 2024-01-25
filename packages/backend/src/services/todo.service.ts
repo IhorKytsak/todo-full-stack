@@ -1,8 +1,8 @@
-import { DeleteResult, UpdateResult, Like } from 'typeorm';
+import { DeleteResult, UpdateResult } from 'typeorm';
 
 import { Todo } from '../entities/Todo.entity';
 import { User } from '../entities/User.entity';
-import { ITodoQuery, ITodoFilter, ITodo } from '../types/todos.type';
+import { ITodoQuery, ITodo } from '../types/todos.type';
 import { errorMassages } from '../consts/error-massage.const';
 
 export default class TodoService {
