@@ -5,9 +5,9 @@ import { toast } from 'react-toastify';
 import Modal from '../../common/components/modal';
 import { AddEditForm } from '../../common/components/add-edit-form';
 import TodoCard from '../../common/components/todo/todo-card';
-import Loader from '../../common/components/loader';
+import { BackdropLoader } from '../../common/components/loader';
 import { SPACES } from '../../theme';
-import { toastMassages } from '../../common/consts';
+import { toastMessages } from '../../common/consts';
 import { useModal } from '../../common/hooks/use-modal.hook';
 import { useGetTodoQuery } from '../../common/hooks/use-todo-queries.hook';
 
@@ -20,11 +20,11 @@ const TodoPage = () => {
   const { isPending, error, data: todo } = useGetTodoQuery(todoId);
 
   if (error) {
-    toast.error(toastMassages.TODO_GET_ERROR);
+    toast.error(toastMessages.TODO_GET_ERROR);
   }
 
   if (isPending) {
-    return <Loader />;
+    return <BackdropLoader />;
   }
 
   return (

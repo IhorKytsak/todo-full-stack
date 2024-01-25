@@ -21,7 +21,7 @@ const NotFoundPage = () => (
     <Typography variant="h6" sx={{ color: COLORS.white }}>
       The page you’re looking for doesn’t exist.
     </Typography>
-    <Link to={APP_KEYS.ROUTER_KEYS.ROOT}>
+    <Link to={APP_KEYS.ROUTER_KEYS.HOME}>
       <Button variant="contained">{actionButtonNames.backHome}</Button>
     </Link>
   </Box>
