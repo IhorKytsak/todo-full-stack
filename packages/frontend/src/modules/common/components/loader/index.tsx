@@ -3,7 +3,13 @@ import { COLORS } from '../../../theme';
 
 export const Loader = () => (
   <Box
-    sx={{ color: COLORS.primary, display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+    sx={{
+      color: COLORS.primary,
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      my: 6
+    }}
   >
     <CircularProgress color="inherit" />
   </Box>

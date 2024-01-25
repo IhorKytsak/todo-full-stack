@@ -13,3 +13,9 @@ export interface ITodoUpdate {
   isCompleted?: boolean;
   isPrivate?: boolean;
 }
+
+export interface ITodoFilters {
+  search?: string;
+  isCompleted?: boolean;
+  isPrivate?: boolean;
+}
