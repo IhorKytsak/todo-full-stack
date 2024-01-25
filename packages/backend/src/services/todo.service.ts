@@ -21,7 +21,7 @@ export default class TodoService {
       findBy.isPrivate = query.isPrivate === 'true';
     }
 
-    const todos = await Todo.findBy(findBy);
+    const todos = await Todo.find({ where: findBy, order: { id: 'DESC' } });
     return todos;
   }
 
