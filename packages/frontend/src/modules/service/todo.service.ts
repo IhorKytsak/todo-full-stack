@@ -5,12 +5,12 @@ import { ITodo, ITodoParams, ITodoUpdate } from '../common/types/todo.types';
 
 class TodoService extends HttpService {
   async getTodos(params: ITodoParams) {
-    const { todos, totalPages } = await this.get({
+    const { todos, totalPages, page } = await this.get({
       url: BACKEND_KEYS.TODOS.ROOT,
       params
     });
 
-    return { todos: todos.map((todo: ITodo) => createTodoModel(todo)), totalPages };
+    return { todos: todos.map((todo: ITodo) => createTodoModel(todo)), totalPages, page };
   }
 
   async getTodo(id: number) {

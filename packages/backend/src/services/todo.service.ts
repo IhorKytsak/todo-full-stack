@@ -9,7 +9,7 @@ export default class TodoService {
   async findAll(
     userId: number,
     { search, isCompleted, isPrivate, page = '1', pageSize = '5' }: ITodoQuery
-  ): Promise<{ todos: ITodo[]; totalPages: number }> {
+  ): Promise<{ todos: ITodo[]; totalPages: number; page: number }> {
     const findBy: ITodoFilter = { user: { id: userId } };
 
     if (search) {
@@ -33,7 +33,7 @@ export default class TodoService {
 
     const totalPages = Math.ceil(totalCount / +pageSize);
 
-    return { todos, totalPages };
+    return { todos, totalPages, page: +page };
   }
 
   async findOne(userId: number, id: number): Promise<ITodo | null> {

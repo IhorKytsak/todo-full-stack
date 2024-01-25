@@ -20,12 +20,9 @@ export interface ITodoFilters {
   isPrivate?: boolean;
 }
 
-export interface ITodoParams {
+export interface ITodoParams extends ITodoFilters {
   page?: number;
   pageSize?: number;
-  search?: string;
-  isCompleted?: boolean;
-  isPrivate?: boolean;
 }
 
 export interface ITodoResponse {
