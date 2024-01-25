@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import TodosTable from '../todos-table';
 import TodosList from '../todos-list';
 import TodoSwiper from '../todo-swiper';
-import { toastMessages } from '../../../consts';
+import { PAGE_SIZE, toastMessages } from '../../../consts';
 import { ITodoFilters, ITodoUpdate } from '../../../types/todo.types';
 import {
   useUpdateTodoMutation,
@@ -18,9 +18,10 @@ import TodosSearchFilterMenu from '../todos-search-filter-menu';
 
 const TodoContainer = () => {
   const [filter, setFilter] = useState<ITodoFilters>({});
+  const [page, setPage] = useState(1);
   const queryClient = useQueryClient();
 
-  const { isPending, error, data } = useGetTodosQuery(filter);
+  const { isPending, error, data } = useGetTodosQuery({ ...filter, pageSize: PAGE_SIZE, page });
   const { mutate: deleteTodoMutation } = useDeleteTodoMutation(queryClient);
   const { mutate: updateTodoMutation } = useUpdateTodoMutation(queryClient);
 
@@ -38,20 +39,23 @@ const TodoContainer = () => {
 
   return (
     <>
-      <TodosSearchFilterMenu setFilter={setFilter} />
+      <TodosSearchFilterMenu setPage={setPage} setFilter={setFilter} />
       <Box sx={{ display: { xs: 'none', md: 'block' } }}>
         <TodosTable
           isPending={isPending}
-          todos={data || []}
+          todos={data?.todos || []}
           changeCompleteStatusHandler={changeCompleteStatusHandler}
           deleteTodoHandler={deleteTodoHandler}
+          count={data?.totalPages}
+          page={page}
+          setPage={setPage}
         />
       </Box>
 
       <Box sx={{ display: { xs: 'none', sm: 'block', md: 'none' } }}>
         <TodoSwiper
           isPending={isPending}
-          todos={data || []}
+          todos={data?.todos || []}
           changeStatusHandler={changeCompleteStatusHandler}
           deleteTodoHandler={deleteTodoHandler}
         />
@@ -60,7 +64,7 @@ const TodoContainer = () => {
       <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
         <TodosList
           isPending={isPending}
-          todos={data || []}
+          todos={data?.todos || []}
           changeStatusHandler={changeCompleteStatusHandler}
           deleteTodoHandler={deleteTodoHandler}
         />
