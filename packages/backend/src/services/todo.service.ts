@@ -1,13 +1,27 @@
-import { DeleteResult, UpdateResult } from 'typeorm';
+import { DeleteResult, UpdateResult, Like } from 'typeorm';
 
 import { Todo } from '../entities/Todo.entity';
 import { User } from '../entities/User.entity';
-import { ITodo } from '../types/todos.type';
+import { ITodoQuery, ITodoFilter, ITodo } from '../types/todos.type';
 import { errorMassages } from '../consts/error-massage.const';
 
 export default class TodoService {
-  async findAll(userId: number): Promise<ITodo[]> {
-    const todos = await Todo.findBy({ user: { id: userId } });
+  async findAll(userId: number, query: ITodoQuery): Promise<ITodo[]> {
+    const findBy: ITodoFilter = { user: { id: userId } };
+
+    if (query.search) {
+      findBy.title = Like(`%${query.search}%`);
+    }
+
+    if (query.isCompleted) {
+      findBy.isCompleted = query.isCompleted === 'true';
+    }
+
+    if (query.isPrivate) {
+      findBy.isPrivate = query.isPrivate === 'true';
+    }
+
+    const todos = await Todo.find({ where: findBy, order: { id: 'DESC' } });
     return todos;
   }
 
