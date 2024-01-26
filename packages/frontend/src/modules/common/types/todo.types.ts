@@ -19,3 +19,13 @@ export interface ITodoFilters {
   isCompleted?: boolean;
   isPrivate?: boolean;
 }
+
+export interface ITodoParams extends ITodoFilters {
+  page?: number;
+  pageSize?: number;
+}
+
+export interface ITodoResponse {
+  todos: ITodo[];
+  totalPages: number;
+}
