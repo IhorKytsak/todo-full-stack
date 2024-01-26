@@ -1,6 +1,7 @@
+import { useEffect, useRef } from 'react';
 import { Box, CardActions } from '@mui/material';
 import { toast } from 'react-toastify';
-import { Swiper, SwiperSlide } from 'swiper/react';
+import { Swiper, SwiperSlide, SwiperRef } from 'swiper/react';
 import ISwiper from 'swiper';
 import 'swiper/css';
 
@@ -18,6 +19,8 @@ interface TodoSwiperProps {
 }
 
 const TodoSwiper = ({ filter, deleteTodoHandler, changeStatusHandler }: TodoSwiperProps) => {
+  const swiperRef = useRef<SwiperRef>(null);
+
   const { data, isFetching, isError, hasNextPage, fetchNextPage } = useGetTodosInfiniteQuery({
     ...filter,
     pageSize: PAGE_SIZE
@@ -25,9 +28,15 @@ const TodoSwiper = ({ filter, deleteTodoHandler, changeStatusHandler }: TodoSwip
 
   const todos = data?.pages.map((page) => page.todos).flat() || [];
 
+  useEffect(() => {
+    if (swiperRef.current?.swiper) {
+      swiperRef.current?.swiper.slideTo(0);
+    }
+  }, [filter]);
+
   const handleChange = (swiper: ISwiper) => {
-    if (swiper.activeIndex === todos.length - 1) {
-      if (hasNextPage && !isFetching) fetchNextPage();
+    if (swiper.isEnd && hasNextPage) {
+      return fetchNextPage();
     }
   };
 
@@ -41,8 +50,9 @@ const TodoSwiper = ({ filter, deleteTodoHandler, changeStatusHandler }: TodoSwip
       {todos.length !== 0 && (
         <Box marginY={4}>
           <Swiper
-            style={{ left: 0, width: '75%' }}
+            ref={swiperRef}
             rewind
+            style={{ left: 0, width: '75%' }}
             spaceBetween={50}
             onSlideChange={handleChange}
           >
