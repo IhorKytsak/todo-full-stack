@@ -8,13 +8,15 @@ import { ITodoFilters } from '../../../types/todo.types';
 
 interface TodosMenuProps {
   setFilter: React.Dispatch<React.SetStateAction<ITodoFilters>>;
+  setPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const TodosSearchFilterMenu = ({ setFilter }: TodosMenuProps) => {
+const TodosSearchFilterMenu = ({ setFilter, setPage }: TodosMenuProps) => {
   const [tab, setTab] = useState('all');
   const [search, setSearch] = useState('');
 
   const handleTab = (_event: React.SyntheticEvent, value: string) => {
+    setPage(1);
     setTab(value);
 
     if (value === 'all') setFilter({ search });
@@ -24,6 +26,7 @@ const TodosSearchFilterMenu = ({ setFilter }: TodosMenuProps) => {
   };
 
   const handleSearch = () => {
+    setPage(1);
     setFilter((prev) => ({ ...prev, search }));
   };
 
