@@ -12,6 +12,7 @@ import NotFoundPage from '../pages/not-found';
 import { APP_KEYS } from '../common/consts';
 import ProtectedRoute from './protected-route';
 import PublicRoute from './public-route';
+import PublicTodosPage from '../pages/public-todos';
 
 export const MainRouter = () => (
   <Routes>
@@ -22,6 +23,7 @@ export const MainRouter = () => (
     </Route>
 
     <Route element={<PublicRoute />}>
+      <Route element={<PublicTodosPage />} path={APP_KEYS.ROUTER_KEYS.PUBLIC_TODOS} />
       <Route element={<LoginPage />} path={APP_KEYS.ROUTER_KEYS.SIGN_IN} />
       <Route element={<RegistrationPage />} path={APP_KEYS.ROUTER_KEYS.SIGN_UP} />
       <Route element={<PasswordRecoveryPage />} path={APP_KEYS.ROUTER_KEYS.RECOVER_PASS} />

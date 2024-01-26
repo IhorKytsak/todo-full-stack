@@ -15,6 +15,8 @@ const todosRouter: Router = Router();
 
 todosRouter.get('', authRequired, tryCatch(todoController.getAllTodo.bind(todoController)));
 
+todosRouter.get('/public', tryCatch(todoController.getPublicTodo.bind(todoController)));
+
 todosRouter.get(
   '/:id',
   authRequired,

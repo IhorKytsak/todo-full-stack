@@ -6,6 +6,13 @@ export interface ITodo {
   isPrivate: boolean;
 }
 
+export interface ITodoPublic {
+  id?: number;
+  title: string;
+  description: string;
+  user: { email: string };
+}
+
 export interface ITodoUpdate {
   id: number;
   title?: string;

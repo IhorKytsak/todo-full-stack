@@ -1,10 +1,10 @@
 import { CardActionArea, Typography, CardContent, Card } from '@mui/material';
 
 import { SPACES } from '../../../../theme';
-import { ITodo } from '../../../types/todo.types';
+import { ITodo, ITodoPublic } from '../../../types/todo.types';
 
 interface TodosListProps {
-  todo: ITodo;
+  todo: ITodo | ITodoPublic;
   children: React.ReactNode;
 }
 
