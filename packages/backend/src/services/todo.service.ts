@@ -39,6 +39,26 @@ export default class TodoService {
     return { todos, totalPages, page: +page };
   }
 
+  async findAllPublic({
+    page = '1',
+    pageSize = '5'
+  }: ITodoQuery): Promise<{ todos: ITodo[]; totalPages: number; page: number }> {
+    const queryBuilder = Todo.createQueryBuilder('todo')
+      .leftJoin('todo.user', 'user')
+      .addSelect(['user.email'])
+      .where('todo.isPrivate = false');
+
+    const [todos, totalCount] = await queryBuilder
+      .orderBy('todo.id', 'DESC')
+      .take(+pageSize)
+      .skip((+page - 1) * +pageSize)
+      .getManyAndCount();
+
+    const totalPages = Math.ceil(totalCount / +pageSize);
+
+    return { todos, totalPages, page: +page };
+  }
+
   async findOne(userId: number, id: number): Promise<ITodo | null> {
     const todo = await Todo.findOneBy({ id, user: { id: userId } });
     return todo;

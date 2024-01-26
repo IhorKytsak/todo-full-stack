@@ -13,6 +13,18 @@ class TodoService extends HttpService {
     return { todos: todos.map((todo: ITodo) => createTodoModel(todo)), totalPages, page };
   }
 
+  async getPublicTodos(params: ITodoParams) {
+    const { todos, totalPages, page } = await this.get(
+      {
+        url: BACKEND_KEYS.TODOS.PUBLIC,
+        params
+      },
+      false
+    );
+
+    return { todos, totalPages, page };
+  }
+
   async getTodo(id: number) {
     const data = await this.get({
       url: BACKEND_KEYS.TODOS.GETTODO(id)

@@ -15,6 +15,13 @@ export class TodoController {
     res.send(todos);
   }
 
+  async getPublicTodo(req: Request, res: Response) {
+    const query = req.query as ITodoQuery;
+    const todos = await this.todoService.findAllPublic(query);
+
+    res.send(todos);
+  }
+
   async getTodo(req: Request, res: Response) {
     const { id: userId } = req.user as User;
     const todoId = Number(req.params.id);

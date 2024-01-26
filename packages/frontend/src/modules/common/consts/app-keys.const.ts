@@ -10,6 +10,7 @@ export const STORAGE_KEYS = {
 // React-query keys
 export const QUERY_KEYS = {
   TODOS: 'todos',
+  PUBLIC: 'public',
   AUTH: 'auth'
 };
 
@@ -18,6 +19,7 @@ export const BACKEND_KEYS = {
   SERVER_URL: 'http://127.0.0.1:4200',
   TODOS: {
     ROOT: 'todos',
+    PUBLIC: 'todos/public',
     CREATE: 'todos/create',
     GETTODO: (todoId: number) => `todos/${todoId}`,
     UPDATE: (todoId: number) => `todos/update/${todoId}`,
@@ -35,6 +37,7 @@ export const BACKEND_KEYS = {
 
 export const ROUTER_KEYS = {
   HOME: '/',
+  PUBLIC_TODOS: '/public',
   TODO: '/todos/:id',
   SIGN_UP: '/user/register',
   SIGN_IN: '/user/login',

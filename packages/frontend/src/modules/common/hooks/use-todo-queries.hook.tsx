@@ -25,3 +25,20 @@ export const useGetTodoQuery = (todoId: number) =>
     queryKey: [APP_KEYS.QUERY_KEYS.TODOS, todoId],
     queryFn: () => todoService.getTodo(todoId)
   });
+
+export const useGetPublicTodosQuery = (params: ITodoParams) =>
+  useQuery({
+    queryKey: [APP_KEYS.QUERY_KEYS.PUBLIC, params],
+    queryFn: () => todoService.getPublicTodos(params)
+  });
+
+export const useGetPublicTodosInfiniteQuery = (params: ITodoParams) =>
+  useInfiniteQuery({
+    queryKey: [APP_KEYS.QUERY_KEYS.PUBLIC, params],
+    queryFn: ({ pageParam = 1 }) => todoService.getPublicTodos({ ...params, page: pageParam }),
+    initialPageParam: 1,
+    getNextPageParam: ({ page, totalPages }) => {
+      const nextPage = page + 1;
+      return nextPage <= totalPages ? nextPage : undefined;
+    }
+  });

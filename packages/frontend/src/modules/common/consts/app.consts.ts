@@ -1,5 +1,6 @@
 export const navigationItems = {
   APPNAME: 'TODO APP',
+  PUBLIC_TODOS: 'Public',
   SIGNUP: 'Sign Up',
   SIGNIN: 'Sign in',
   SIGNOUT: 'Sign Out',
