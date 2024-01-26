@@ -7,7 +7,7 @@ interface ButtonWithIconProps {
 }
 
 const ButtonWithIcon = ({ onClickHandler, text, icon }: ButtonWithIconProps) => (
-  <Button sx={{ my: 2 }} onClick={onClickHandler} variant="outlined" startIcon={icon}>
+  <Button onClick={onClickHandler} variant="outlined" startIcon={icon}>
     {text}
   </Button>
 );

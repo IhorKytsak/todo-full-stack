@@ -1,5 +1,6 @@
 import { Response, Request } from 'express';
 
+import { ITodoQuery } from '../types/todos.type';
 import { User } from '../entities/User.entity';
 import TodoService from '../services/todo.service';
 
@@ -8,7 +9,8 @@ export class TodoController {
 
   async getAllTodo(req: Request, res: Response) {
     const { id: userId } = req.user as User;
-    const todos = await this.todoService.findAll(userId);
+    const query = req.query as ITodoQuery;
+    const todos = await this.todoService.findAll(userId, query);
 
     res.send(todos);
   }

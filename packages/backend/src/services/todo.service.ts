@@ -2,12 +2,32 @@ import { DeleteResult, UpdateResult } from 'typeorm';
 
 import { Todo } from '../entities/Todo.entity';
 import { User } from '../entities/User.entity';
-import { ITodo } from '../types/todos.type';
+import { ITodoQuery, ITodo } from '../types/todos.type';
 import { errorMassages } from '../consts/error-massage.const';
 
 export default class TodoService {
-  async findAll(userId: number): Promise<ITodo[]> {
-    const todos = await Todo.findBy({ user: { id: userId } });
+  async findAll(userId: number, query: ITodoQuery): Promise<ITodo[]> {
+    const queryBuilder = Todo.createQueryBuilder('todo').where('todo.user.id = :userId', {
+      userId
+    });
+
+    if (query.search) {
+      queryBuilder.andWhere('todo.title LIKE :search', { search: `%${query.search}%` });
+    }
+
+    if (query.isCompleted) {
+      queryBuilder.andWhere('todo.isCompleted = :isCompleted', {
+        isCompleted: query.isCompleted === 'true'
+      });
+    }
+
+    if (query.isPrivate) {
+      queryBuilder.andWhere('todo.isPrivate = :isPrivate', {
+        isPrivate: query.isPrivate === 'true'
+      });
+    }
+
+    const todos = await queryBuilder.orderBy('todo.id', 'DESC').getMany();
     return todos;
   }
 

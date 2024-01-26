@@ -1,12 +1,13 @@
 import HttpService from './http.service';
 import { BACKEND_KEYS } from '../common/consts/app-keys.const';
 import { createTodoModel } from '../common/types/todo.model';
-import { ITodo, ITodoUpdate } from '../common/types/todo.types';
+import { ITodo, ITodoFilters, ITodoUpdate } from '../common/types/todo.types';
 
 class TodoService extends HttpService {
-  async getTodos() {
+  async getTodos(filters: ITodoFilters) {
     const data = await this.get({
-      url: BACKEND_KEYS.TODOS.ROOT
+      url: BACKEND_KEYS.TODOS.ROOT,
+      params: filters
     });
 
     return data.map((todo: ITodo) => createTodoModel(todo));
