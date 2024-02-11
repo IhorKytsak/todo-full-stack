@@ -1,10 +1,21 @@
-# Full-Stack Todo App
+# Todo App
 
-This is a full-stack todo app built with React, Node.js, Express and PostgreSQL. It includes user authentication,user password reset/change error handling, responsive design, pagination, filtering and more.
+### This is a full-stack todo app built with React, Node.js, Express and PostgreSQL. 
+#### It includes user authentication,user password reset/change error handling, responsive design, pagination, filtering and more.
 
 ## Site Preview
 
-// GIFs or images of site preview
+### Public View
+![Public view](https://github.com/IhorKytsak/todo-full-stack/blob/ikytsak/main/site-view/public%20view.gif)
+
+### User View
+![User View](https://github.com/IhorKytsak/todo-full-stack/blob/ikytsak/main/site-view/user%20view.gif)
+
+### Todo CRUD Operations
+![Todo CRUD Operations](https://github.com/IhorKytsak/todo-full-stack/blob/ikytsak/main/site-view/CRUD%20todo.gif)
+
+### Filter Todo
+![Filter Todo](https://github.com/IhorKytsak/todo-full-stack/blob/ikytsak/main/site-view/filter%20todo.gif)
 
 ## Tech Stack
 
