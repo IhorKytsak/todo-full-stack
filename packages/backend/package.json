@@ -1,5 +1,5 @@
 {
-  "name": "@cgs-team-boilerplate/backend",
+  "name": "todo-backend",
   "version": "1.0.0",
   "description": "Mongoose Node.js Express TypeScript application boilerplate with best practices for API development.",
   "author": "Paul Cham",
